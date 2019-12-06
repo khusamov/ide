@@ -1,0 +1,32 @@
+{
+  "name": "ide",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "rollup --config --watch",
+    "build": "rollup --config"
+  },
+  "dependencies": {
+    "@rollup/plugin-html": "^0.1.0",
+    "@rollup/plugin-json": "^4.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-monaco-editor": "^0.32.1",
+    "react-scripts": "3.3.0",
+    "rollup": "^1.27.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-smart-asset": "^2.0.6",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "typescript": "~3.7.2"
+  }
+}
