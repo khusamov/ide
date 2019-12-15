@@ -34,7 +34,9 @@ const getPlugins = options => [
 	}),
 
 	replace({
-		'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production')
+		'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
+		'process.env.BUILD_VERSION': JSON.stringify(pkg.version),
+		'process.env.BUILD_DATE': JSON.stringify(+new Date)
 	}),
 	resolve({
 		browser: true
