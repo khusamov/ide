@@ -1,5 +1,7 @@
 import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
+import {terser} from 'rollup-plugin-terser';
+import deleteDist from 'rollup-plugin-delete';
 import progress from 'rollup-plugin-progress';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
@@ -12,11 +14,21 @@ import typeScript from 'rollup-plugin-typescript2';
 import {template} from './rollup.html';
 import pkg from './package.json';
 
+const distinationPath = 'dist';
 const isDevelopment = process.argv.includes('--watch'); // process.env.ROLLUP_WATCH
+const isProduction = !isDevelopment;
 
 const getPlugins = options => [
-	isDevelopment && livereload(),
-	isDevelopment && serve('dist'),
+	isDevelopment && livereload(distinationPath),
+	isDevelopment && serve({
+		open: true,
+		contentBase: distinationPath
+	}),
+	isProduction && terser(),
+	// https://github.com/vladshcherbin/rollup-plugin-delete
+	deleteDist({
+		targets: distinationPath
+	}),
 	progress({
 		clearLine: false
 	}),
