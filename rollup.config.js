@@ -6,7 +6,7 @@ import progress from 'rollup-plugin-progress';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import html from '@rollup/plugin-html'; // https://github.com/haifeng2013/rollup-plugin-bundle-html
+import html from '@rollup/plugin-html';
 import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
 import smartAsset from 'rollup-plugin-smart-asset';
