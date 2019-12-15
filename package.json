@@ -1,8 +1,12 @@
 {
   "name": "khusamov-experimental-ide",
-  "description": "khusamov-experimental-ide",
+  "description": "Экспериментальная микро среда разработки (IDE) на ReactJS, Monaco Editor и RollupJS",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khusamov/ide"
+  },
   "scripts": {
     "start": "rollup --config --watch",
     "build": "rollup --config"
