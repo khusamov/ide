@@ -34,15 +34,6 @@ export async function template({attributes, files, publicPath, title}) {
 				<meta charset="utf-8">
 				<title>${title}</title>
 				<script>
-					window.onpossiblyunhandledexception = function(){
-						window.onerror.apply(this, arguments); // call
-					};
-					
-					window.onerror = error => {
-						console.log('window.onerror');
-						console.error(error); // logs all errors
-					};
-					
 					window.addEventListener('unhandledrejection', promiseRejectionEvent => {
 						console.error(promiseRejectionEvent);
 					});
