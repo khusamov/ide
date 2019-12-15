@@ -79,17 +79,22 @@ const getPlugins = options => [
 ];
 
 export default {
-	input: 'src/index.tsx',
+	input: {
+		index: 'src/index.tsx',
+		// 'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js'
+	},
 	plugins: getPlugins({target: 'es5'}),
 	output: {
-		experimentalCodeSplitting: true,
-		external: ['react', 'react-dom'],
+		// experimentalCodeSplitting: true,
+		external: ['react', 'react-dom', 'react-monaco-editor', 'monaco-editor'],
 		globals: {
 			'react': 'React',
 			'react-dom': 'ReactDOM'
 		},
-		file: 'dist/index.js',
-		format: 'iife',
+		// file: 'dist/index.js',
+		entryFileNames: '[name].js',
+		dir: 'dist',
+		format: 'es',
 		sourcemap: true
 	}
 };
