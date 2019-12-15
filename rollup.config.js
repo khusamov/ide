@@ -26,7 +26,7 @@ const getPlugins = options => [
 	}),
 	isProduction && terser(),
 	// https://github.com/vladshcherbin/rollup-plugin-delete
-	deleteDist({
+	isProduction && deleteDist({
 		targets: distinationPath
 	}),
 	progress({
