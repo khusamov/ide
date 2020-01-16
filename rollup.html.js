@@ -8,7 +8,7 @@
  * @param title
  * @returns {Promise<string>}
  */
-export async function template({attributes, files, publicPath, title}) {
+export async function htmlTemplate({attributes, files, publicPath, title}) {
 	const scripts = (
 		(files.js || [])
 			.map(({ fileName }) => {

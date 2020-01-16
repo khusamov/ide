@@ -3,21 +3,32 @@ import serve from 'rollup-plugin-serve';
 import {terser} from 'rollup-plugin-terser';
 import deleteDist from 'rollup-plugin-delete';
 import progress from 'rollup-plugin-progress';
-import replace from 'rollup-plugin-replace';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import replace from '@rollup/plugin-replace';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import html from '@rollup/plugin-html';
 import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
 import smartAsset from 'rollup-plugin-smart-asset';
-import typeScript from 'rollup-plugin-typescript2';
-import {template} from './rollup.html';
+import typescript from '@rollup/plugin-typescript';
+import {htmlTemplate} from './rollup.html';
 import pkg from './package.json';
 
-const distinationPath = 'dist';
-const isDevelopment = process.argv.includes('--watch'); // process.env.ROLLUP_WATCH
+/**
+ * Директория сборки.
+ * В эту директорию собираются также файлы в режиме ROLLUP_WATCH.
+ */
+const distinationPath = 'build';
+
+/**
+ * Флаги с типами окружения.
+ */
+const isDevelopment = process.env.ROLLUP_WATCH === 'true';
 const isProduction = !isDevelopment;
 
+/**
+ * Настройки RollupJS.
+ */
 export default {
 	input: {
 		index: 'src/index.tsx'
@@ -29,11 +40,14 @@ export default {
 		},
 		external: ['react', 'react-dom', 'react-monaco-editor', 'monaco-editor'],
 		entryFileNames: '[name].js',
-		dir: 'dist',
+		dir: distinationPath,
 		format: 'es',
 		sourcemap: true
 	},
 	plugins: [
+		json(),
+		typescript(),
+
 		isDevelopment && livereload(distinationPath),
 
 		isDevelopment && serve({
@@ -71,12 +85,10 @@ export default {
 
 		// https://github.com/rollup/plugins/tree/master/packages/html
 		html({
-			template,
+			template: htmlTemplate,
 			title: pkg.description || pkg.name,
 			attributes: {html: {lang: 'ru'}}
 		}),
-
-		json(),
 
 		postcss({
 			modules: true
@@ -86,12 +98,6 @@ export default {
 		smartAsset({
 			url: 'copy',
 			keepImport: true
-		}),
-
-		typeScript({
-			// https://github.com/ezolenko/rollup-plugin-typescript2
-			objectHashIgnoreUnknownHack: true,
-			tsconfig: 'tsconfig.json'
 		})
 	]
 };
