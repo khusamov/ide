@@ -1,16 +1,18 @@
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import replace from '@rollup/plugin-replace';
+import html from '@rollup/plugin-html';
+import json from '@rollup/plugin-json';
+
+import smartAsset from 'rollup-plugin-smart-asset';
+import postcss from 'rollup-plugin-postcss';
 import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
 import {terser} from 'rollup-plugin-terser';
 import deleteDist from 'rollup-plugin-delete';
 import progress from 'rollup-plugin-progress';
-import replace from '@rollup/plugin-replace';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import html from '@rollup/plugin-html';
-import json from '@rollup/plugin-json';
-import postcss from 'rollup-plugin-postcss';
-import smartAsset from 'rollup-plugin-smart-asset';
-import typescript from '@rollup/plugin-typescript';
+
 import {htmlTemplate} from './rollup.html';
 import pkg from './package.json';
 
