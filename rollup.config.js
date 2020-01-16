@@ -18,7 +18,7 @@ import pkg from './package.json';
  * Директория сборки.
  * В эту директорию собираются также файлы в режиме ROLLUP_WATCH.
  */
-const distinationPath = 'build';
+const distPath = 'build';
 
 /**
  * Флаги с типами окружения.
@@ -40,7 +40,7 @@ export default {
 		},
 		external: ['react', 'react-dom', 'react-monaco-editor', 'monaco-editor'],
 		entryFileNames: '[name].js',
-		dir: distinationPath,
+		dir: distPath,
 		format: 'es',
 		sourcemap: true
 	},
@@ -48,18 +48,18 @@ export default {
 		json(),
 		typescript(),
 
-		isDevelopment && livereload(distinationPath),
+		isDevelopment && livereload(distPath),
 
 		isDevelopment && serve({
 			open: true,
-			contentBase: distinationPath
+			contentBase: distPath
 		}),
 
 		isProduction && terser(),
 
 		// https://github.com/vladshcherbin/rollup-plugin-delete
 		isProduction && deleteDist({
-			targets: distinationPath
+			targets: distPath
 		}),
 
 		progress({
