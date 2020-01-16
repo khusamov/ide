@@ -50,10 +50,6 @@ export async function template({attributes, files, publicPath, title}) {
 
 }
 
-
-
-
-
 function makeHtmlAttributes(attributes) {
 	if (!attributes) {
 		return '';

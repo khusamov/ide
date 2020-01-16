@@ -18,83 +18,80 @@ const distinationPath = 'dist';
 const isDevelopment = process.argv.includes('--watch'); // process.env.ROLLUP_WATCH
 const isProduction = !isDevelopment;
 
-const getPlugins = options => [
-	isDevelopment && livereload(distinationPath),
-	isDevelopment && serve({
-		open: true,
-		contentBase: distinationPath
-	}),
-	isProduction && terser(),
-	// https://github.com/vladshcherbin/rollup-plugin-delete
-	isProduction && deleteDist({
-		targets: distinationPath
-	}),
-	progress({
-		clearLine: false
-	}),
-
-	replace({
-		'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
-		'process.env.BUILD_VERSION': JSON.stringify(pkg.version),
-		'process.env.BUILD_DATE': JSON.stringify(+new Date)
-	}),
-	resolve({
-		browser: true
-	}),
-	commonjs({
-		namedExports: {
-			'react': ['Children', 'Component', 'PropTypes', 'createElement'],
-			'react-dom': ['render']
-		}
-	}),
-
-	// https://github.com/rollup/plugins/tree/master/packages/html
-	html({
-		template,
-		title: pkg.description || pkg.name,
-		attributes: {html: {lang: 'ru'}}
-	}),
-
-	json(),
-
-	postcss({
-		modules: true
-	}),
-
-	// https://github.com/rollup/rollup-plugin-url/issues/18
-	smartAsset({
-		url: 'copy',
-		keepImport: true
-	}),
-
-	typeScript({
-		objectHashIgnoreUnknownHack: true, // https://github.com/ezolenko/rollup-plugin-typescript2
-		tsconfig: 'tsconfig.json',
-		tsconfigOverride: {
-			compilerOptions: {
-				target: options.target
-			}
-		}
-	})
-];
-
 export default {
 	input: {
-		index: 'src/index.tsx',
-		// 'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js'
+		index: 'src/index.tsx'
 	},
-	plugins: getPlugins({target: 'es5'}),
 	output: {
-		// experimentalCodeSplitting: true,
-		external: ['react', 'react-dom', 'react-monaco-editor', 'monaco-editor'],
 		globals: {
 			'react': 'React',
 			'react-dom': 'ReactDOM'
 		},
-		// file: 'dist/index.js',
+		external: ['react', 'react-dom', 'react-monaco-editor', 'monaco-editor'],
 		entryFileNames: '[name].js',
 		dir: 'dist',
 		format: 'es',
 		sourcemap: true
-	}
+	},
+	plugins: [
+		isDevelopment && livereload(distinationPath),
+
+		isDevelopment && serve({
+			open: true,
+			contentBase: distinationPath
+		}),
+
+		isProduction && terser(),
+
+		// https://github.com/vladshcherbin/rollup-plugin-delete
+		isProduction && deleteDist({
+			targets: distinationPath
+		}),
+
+		progress({
+			clearLine: false
+		}),
+
+		replace({
+			'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
+			'process.env.BUILD_VERSION': JSON.stringify(pkg.version),
+			'process.env.BUILD_DATE': JSON.stringify(+new Date)
+		}),
+
+		resolve({
+			browser: true
+		}),
+
+		commonjs({
+			namedExports: {
+				'react': ['Children', 'Component', 'PropTypes', 'createElement'],
+				'react-dom': ['render']
+			}
+		}),
+
+		// https://github.com/rollup/plugins/tree/master/packages/html
+		html({
+			template,
+			title: pkg.description || pkg.name,
+			attributes: {html: {lang: 'ru'}}
+		}),
+
+		json(),
+
+		postcss({
+			modules: true
+		}),
+
+		// https://github.com/rollup/rollup-plugin-url/issues/18
+		smartAsset({
+			url: 'copy',
+			keepImport: true
+		}),
+
+		typeScript({
+			// https://github.com/ezolenko/rollup-plugin-typescript2
+			objectHashIgnoreUnknownHack: true,
+			tsconfig: 'tsconfig.json'
+		})
+	]
 };
