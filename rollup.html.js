@@ -46,8 +46,6 @@ export async function htmlTemplate({attributes, files, publicPath, title}) {
 			</body>
 		</html>
 	`);
-
-
 }
 
 function makeHtmlAttributes(attributes) {
