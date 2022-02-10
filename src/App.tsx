@@ -1,52 +1,36 @@
-import React, {Component} from 'react';
-// import MonacoEditor from 'react-monaco-editor';
-import Editor from '@monaco-editor/react';
-import styles from './App.css';
+import React, {useRef, useState} from 'react';
+import Editor, {OnChange} from '@monaco-editor/react';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import useResizeHide from './hooks/useResizeHide';
 
+export default function VariableWidthGrid() {
+	const editorWrapRef = useRef<HTMLDivElement>(null)
 
-// import monaco from 'monaco-editor/esm/vs/editor/editor.api';
-// import 'monaco-editor/esm/vs/editor/browser/controller/coreCommands.js';
-// import 'monaco-editor/esm/vs/editor/contrib/find/findController.js';
-// import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution.js';
-//
-//
-//
-// // @ts-ignore
-// self.MonacoEnvironment = {
-// 	// @ts-ignore
-// 	getWorkerUrl: function(moduleId, label) {
-// 		if (label === "json") {
-// 			return "./json.worker.bundle.js";
-// 		}
-// 		if (label === "css") {
-// 			return "./css.worker.bundle.js";
-// 		}
-// 		if (label === "html") {
-// 			return "./html.worker.bundle.js";
-// 		}
-// 		if (label === "typescript" || label === "javascript") {
-// 			return "./ts.worker.bundle.js";
-// 		}
-// 		return "./editor.worker.bundle.js";
-// 	}
-// };
+	const [codeSourceText, setCodeSourceText] = useState<string | undefined>()
+	const [editorHidden] = useResizeHide(editorWrapRef)
 
+	const onEditorChange: OnChange = value => setCodeSourceText(value)
 
-
-export default class App extends Component {
-	render() {
-		return (
-			<div className={styles.App}>
-
-				{/*<MonacoEditor*/}
-				{/*	width={800}*/}
-				{/*	height={400}*/}
-				{/*	language='javascript'*/}
-				{/*/>*/}
-
-				<Editor language='javascript' />
-
-			</div>
-		);
-	}
-};
+	return (
+		<Box sx={{flexGrow: 1, height: '100%'}}>
+			<Grid container sx={{height: '100%'}} alignItems='stretch'>
+				<Grid item xs={3} sx={{margin: 10, border: '1px solid silver'}}>
+					Содержимое левой колонки.
+				</Grid>
+				<Grid ref={editorWrapRef} item xs sx={{margin: 10, border: '1px solid silver'}}>
+					{!editorHidden && (
+						<Editor
+							width='100%'
+							height='100%'
+							loading='Загрузка редактора...'
+							language='typescript'
+							value={codeSourceText}
+							onChange={onEditorChange}
+						/>
+					)}
+				</Grid>
+			</Grid>
+		</Box>
+	)
+}
