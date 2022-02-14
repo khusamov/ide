@@ -51,7 +51,7 @@ export default function useResizeHide<T extends Element>(ref: RefObject<T>): [bo
 				}
 			}
 		},
-		[ref]
+		[]
 	)
 	return [hidden];
 }

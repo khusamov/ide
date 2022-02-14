@@ -4,6 +4,7 @@ import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
 import html from '@rollup/plugin-html';
+import {babel} from '@rollup/plugin-babel';
 
 import smartAsset from 'rollup-plugin-smart-asset';
 import postcss from 'rollup-plugin-postcss';
@@ -47,6 +48,7 @@ export default {
 		sourcemap: true
 	},
 	plugins: [
+		babel({presets: ['@babel/preset-react']}),
 		resolve(),
 		commonjs(),
 		typescript(),

@@ -1,7 +1,7 @@
-import {useRef, useState} from 'react';
-import Editor, {OnChange, EditorProps} from '@monaco-editor/react';
+import React, {useRef, useState} from 'react';
+import Editor, {OnChange} from '@monaco-editor/react';
 import useResizeHide from './hooks/useResizeHide';
-import {Splitter, SplitterPanel, SplitterProps} from './Splitter';
+import {Splitter, SplitterPanel} from './Splitter.jsx';
 
 export default function VariableWidthGrid() {
 	const [codeSourceText, setCodeSourceText] = useState<string | undefined>()
@@ -22,32 +22,29 @@ export default function VariableWidthGrid() {
 			: editorDisplayShow
 	)
 
-	const splitterProps: SplitterProps = {
-		onResizeStart,
-		onResizeEnd,
-		stateKey: 'application-splitter',
-		stateStorage: 'local',
-		style: {height: '100%'}
-	}
-
-	const editorProps: EditorProps = {
-		width: '100%',
-		height: '100%',
-		loading: 'Загрузка редактора...',
-		language: 'typescript',
-		value: codeSourceText,
-		onChange: onEditorChange
-	}
-
 	return (
-		<Splitter {...splitterProps}>
-			<SplitterPanel size={20}>
+		<Splitter
+			style={{height: '100%'}}
+			onResizeStart={onResizeStart}
+			onResizeEnd={onResizeEnd}
+			stateKey={"mykey"}
+			stateStorage={"local"}
+		>
+			<SplitterPanel>
 				Panel 1
 			</SplitterPanel>
-			<SplitterPanel size={80}>
+			<SplitterPanel style={{paddingLeft: 50}}>
 				<div ref={editorWrapRef} style={{height: '100%', overflow: 'hidden'}}>
 					<div style={{height: '100%', display: editorDisplay}}>
-						<Editor {...editorProps}/>
+						<Editor
+							width='100%'
+							height='100%'
+							loading='Загрузка редактора...'
+							language='typescript'
+							value={codeSourceText}
+							onChange={onEditorChange}
+							options={{minimap: {enabled: false}}}
+						/>
 					</div>
 				</div>
 			</SplitterPanel>
