@@ -19,9 +19,9 @@ declare module 'primereact/splitter' {
 	 */
 	export interface Splitter {
 		props: MySplitterProps
+		panelSizes: number[]
 		new(props: MySplitterProps, context: any): Splitter
 		onResizeStart(event: SyntheticEvent, index: number): void
-		panelSizes: number[]
 	}
 }
 
