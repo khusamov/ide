@@ -1,5 +1,6 @@
 import {SyntheticEvent, ReactNode} from 'react'
 import {Splitter, SplitterProps, SplitterResizeEndParams} from 'primereact/splitter'
+import './Splitter.css'
 
 export {SplitterPanel} from 'primereact/splitter'
 
