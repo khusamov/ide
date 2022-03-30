@@ -29,7 +29,7 @@ declare module 'primereact/splitter' {
  * В компонент Splitter добавлена опция onResizeStart.
  * @link https://www.primefaces.org/primereact/splitter/
  */
-class MySplitter extends Splitter {
+export default class extends Splitter {
 	onResizeStart(event: SyntheticEvent, index: number) {
 		if (this.props.onResizeStart) {
 			this.props.onResizeStart({
@@ -42,5 +42,4 @@ class MySplitter extends Splitter {
 	}
 }
 
-export {MySplitter as Splitter}
 export type {MySplitterProps as SplitterProps}
